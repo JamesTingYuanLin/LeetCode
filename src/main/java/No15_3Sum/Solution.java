@@ -5,6 +5,34 @@ import java.util.*;
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        int left = 1;
+        int right = nums.length - 1;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            left = i + 1;
+            right = nums.length - 1;
+            while (left < right) {
+                if (0 == nums[i] + nums[left] + nums[right]) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    left++;
+                    right--;
+                    while (left < nums.length && nums[left] == nums[left - 1]) left++;
+                    while (right >= 0 && nums[right] == nums[right + 1]) right--;
+                } else if (0 > nums[i] + nums[left] + nums[right]) {
+                    left++;
+                } else if (0 < nums[i] + nums[left] + nums[right]) {
+                    right--;
+                }
+            }
+        }
+        return result;
+
+        /* brute solution
+
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
         Set<ArrayList<Integer>> uniqueReult = new HashSet<ArrayList<Integer>>();
         Map<Set<Integer>, Integer> twoSum = getTwoSum(nums);
         for (int i = 0 ; i< nums.length; i++) {
@@ -30,7 +58,11 @@ public class Solution {
             result.add(new ArrayList<Integer>(s));
         }
         return result;
+
+         */
     }
+
+    /* brute solution
 
     private Map<Set<Integer>, Integer> getTwoSum(int[] nums) {
         Map<Set<Integer>, Integer> twoSum = new HashMap<Set<Integer>, Integer>(); // index, sum
@@ -44,5 +76,7 @@ public class Solution {
         }
         return twoSum;
     }
+
+     */
 }
 
